@@ -1,4 +1,4 @@
-# eatogether
+# eatTogether
 
 > A Vue.js project
 
