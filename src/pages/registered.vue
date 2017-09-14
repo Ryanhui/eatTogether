@@ -20,6 +20,14 @@
 				<input v-model="repeat" type="password" placeholder="再次输入密码">
 			</div>
 			<span>{{ checkrepeat }}</span>
+			<div class="captchaContainer">
+				<div class="captchaInput">
+					<input v-model="captcha" type="text" placeholder="请输入验证码">
+				</div>
+				<div class="captchaImg">
+					<img src="http://123.207.87.143:8124/" alt="刷新显大图">
+				</div>
+			</div>
 			<div>
 				<input v-on:click="check" class="button confirm" type="submit" value="注册">
 			</div>
@@ -43,7 +51,9 @@
 				checkname: 		'',
 				checkemail: 	'',
 				checkpassword: 	'',
-				checkrepeat: 	''
+				checkrepeat: 	'',
+
+				captcha: 		''
 			}
 		},
 		methods: {
@@ -75,7 +85,39 @@
 				}else{
 					this.checkrepeat = "两次输入的密码不一样"
 				}
+				this.formpost();
+			},
+			formpost: function(){
+				var querystring = require('querystring');
+				var httpRequest;
 
+				var bodyString = {
+					name: 		this.name,
+					email: 		this.email,
+					password: 	this.password,
+					captcha: 	this.captcha
+				};
+
+				var postStr = querystring.stringify(bodyString);
+
+				httpRequest = new XMLHttpRequest();
+				if(!httpRequest) {
+					alert('这里有一点错误！');
+					return false;
+				}
+				httpRequest.onreadystatechange = function(){
+					if(httpRequest.readyState === XMLHttpRequest.DONE){
+						if(httpRequest.status === 200) {
+							alert(httpRequest.responseText);
+						}else{
+							alert('呀！网络错误！');
+						}
+					}
+				};
+		
+				httpRequest.open('POST','https://www.ryansky.cn:2323/');
+				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded;charset=UTF-8");
+				httpRequest.send(postStr);
 			}
 		}
 	}
@@ -117,5 +159,27 @@
 		color: red;
 		display: block;
 		margin-bottom: 10px;
+	}
+	.captchaContainer{
+		display: -webkit-box;
+		display: -moz-box;
+		display: box;
+		-webkit-box-orient: horizontal;
+		-moz-box-orient: horizontal;
+		box-orient: horizontal;
+	}
+	.captchaInput,
+	.captchaImg
+	{
+		-webkit-box-flex: 1;
+		-moz-box-flex: 1;
+		box-flex: 1;
+	}
+	.captchaImg{
+		padding-left: 10px;
+	}
+	.captchaImg img{
+		width: 100%;
+		height: 100%;
 	}
 </style>
