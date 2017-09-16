@@ -28,6 +28,7 @@
 					<img src="http://123.207.87.143:8124/" alt="刷新显大图">
 				</div>
 			</div>
+			<span>{{ checkcaptcha }}</span>
 			<div>
 				<input v-on:click="check" class="button confirm" type="submit" value="注册">
 			</div>
@@ -53,16 +54,19 @@
 				checkpassword: 	'',
 				checkrepeat: 	'',
 
-				captcha: 		''
+				captcha: 		'',
+				checkcaptcha: 	''
 			}
 		},
 		methods: {
 			check:function(){
 				//验证email是否合法
+				let flag = true;
 				this.email = this.email.replace(/^\s+|\s+$/g,"").toLowerCase();
 				let regexp = /^[a-z0-9](\w|\.|-)*@([a-z0-9]+-?[a-z0-9]+\.){1,3}[a-z]{2,4}$/i;
 				if(this.email.match(regexp)==null){
 					this.checkemail = "请输入有效的邮箱";
+					flag = false;
 				}else{
 					this.checkemail = "";
 				}
@@ -71,6 +75,7 @@
 					this.checkname = "";
 				}else{
 					this.checkname = "请输入有效的昵称";
+					flag = false;
 				}
 				//验证密码是否合法
 				let reg = new RegExp(/^[A-Za-z0-9]{6,20}$/);
@@ -78,14 +83,27 @@
 					this.checkpassword = "";
 				}else{
 					this.checkpassword = "请输入有效的密码"
+					flag = false;
 				}
 				//验证重复密码
 				if(this.password === this.repeat){
 					this.checkrepeat = "";
 				}else{
 					this.checkrepeat = "两次输入的密码不一样"
+					flag = false;
 				}
-				this.formpost();
+				//验证码确认
+				if(this.captcha.length == 6 && (/^\w{6}/g).test(this.captcha) ){
+					this.checkcaptcha = '';
+				}else{
+					this.checkcaptcha = "请输入正确的验证码";
+					flag = false;
+				}
+
+				if(flag === true){
+					this.formpost();
+				}
+				
 			},
 			formpost: function(){
 				var querystring = require('querystring');
