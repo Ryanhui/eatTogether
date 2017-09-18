@@ -3,18 +3,18 @@
 		<div class="gap"></div>
 		<div class="who">
 			<div class="head">
-				<div><img src="../assets/heads/6215699cd7d9d7aa93bbdd9c9b727ccc.jpg" alt=""></div>
-				<div class="name">小小茄子你在呢吗</div>
+				<div><img :src="photoUrl" alt=""></div>
+				<div class="name">{{ userName }}</div>
 				<div class="releasetime"> 
-					<p>发布于 9月17日</p>
-					<p>2017</p>
+					<p>时间 {{releaseTime}}</p>
+					<p>{{ releaseYear }}</p>
 				</div>
 			</div>
 
 			<div class="body">
 				<div class="body_left">
-					<div>第八餐厅</div>
-					<div>17:00 - 18:00</div>					
+					<div>{{place}}</div>
+					<div>{{time}}</div>					
 				</div>
 				<div class="body_right">
 					<button>一起吃</button>
@@ -22,7 +22,7 @@
 			</div>	
 
 			<div class="tail">
-				<p>「 虽然你我会下落不明，你知道我曾为你动过情。虽然你我会下落不明，你知道我曾为你动过情。 」 </p>
+				<p>「 {{ message }} 」 </p>
 			</div>
 		
 		</div>
@@ -33,9 +33,10 @@
 	export default{
 		data: function(){
 			return{
-				
+				photoUrl: 'http://www.ryansky.cn/eatTogetherHead/' + this.userHead  + '.jpg'
 			}
-		}
+		},
+		props:['userName','message','place','releaseYear','releaseTime','time','userHead']
 	}
 </script>
 
