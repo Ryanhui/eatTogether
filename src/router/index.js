@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 import logandreg from '@/pages/logandreg'
 import main from '@/pages/main'
 import registered from '@/pages/registered'
