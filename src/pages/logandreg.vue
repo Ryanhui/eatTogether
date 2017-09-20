@@ -3,7 +3,9 @@
 		<div class="returnBack">
 			<backarrow message='/'></backarrow>
 		</div>
-		<div class="logo">饭否</div>
+		<div class="logoImg">
+			<img src="../assets/eat.png" alt="一起吃">
+		</div>
 		<div class="logorreg">
 			<div class="log">
 				<router-link to="/login">
@@ -21,9 +23,24 @@
 
 <script>
 	import backarrow from '@/components/backArrow';
+	import {mapMutations} from 'vuex';
+
 	export default {
 			components:{
 				backarrow
+			},
+			computed:{
+				count() {
+					return this.$store.state.count
+				}
+			},
+			methods:{
+				...mapMutations([
+					'increment'
+				]),
+				add:function(){
+					this.increment();
+				}
 			}
 	}
 </script>
@@ -70,6 +87,15 @@
 		position: absolute;
 		top: 0;
 		left: 0;
+		width: 100%;
+	}
+	.logoImg{
+		width: 20em;
+		margin: 0 auto;
+		margin-top: 6em;
+		margin-bottom: 1em;
+	}
+	.logoImg img{
 		width: 100%;
 	}
 </style>
