@@ -33,7 +33,7 @@
 	export default{
 		data: function(){
 			return{
-				photoUrl: 'http://www.ryansky.cn/eatTogetherHead/' + this.userHead  + '.jpg'
+				photoUrl: 'http://www.qinlab.net/heads/' + this.userHead  + '.jpg'
 			}
 		},
 		props:['userName','message','place','releaseYear','releaseTime','time','userHead']
