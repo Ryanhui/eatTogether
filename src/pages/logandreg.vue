@@ -24,8 +24,14 @@
 <script>
 	import backarrow from '@/components/backArrow';
 	import {mapMutations} from 'vuex';
+	import $ from 'jquery';
 
 	export default {
+			data:function(){
+				return{
+					
+				}
+			},
 			components:{
 				backarrow
 			},
@@ -41,6 +47,7 @@
 				add:function(){
 					this.increment();
 				}
+				
 			}
 	}
 </script>

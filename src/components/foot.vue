@@ -1,16 +1,54 @@
 <template>
 	<div id="footer">
 		<div id="date">
-			约个饭
+			<router-link :to="appointmentRouter" v-on:click="showAlert">约个饭</router-link>
 		</div>
 		<div id="login">
-			<router-link to="/logandreg">注册／登陆</router-link>
+			<router-link :to="routerTo">{{ routerContent }}</router-link>
 		</div>	
 	</div>
 </template>
 
 <script>
 	module.exports = {
+		data:function(){
+			return{
+				routerTo : 			'',
+				routerContent: 		'',
+
+				appointmentRouter: 	'',
+				appointmentContent: ''
+			}
+		},
+	
+		methods:{
+			showAlert:function(){
+				if(this.appointmentContent == ''){
+					return;
+				}else{
+					alert(this.appointmentContent);
+				}
+			}
+		},
+
+		created:function(){
+			let verify = localStorage.getItem('verify');
+			let time = localStorage.getItem('time');
+
+			if(verify == 'true' && Date.now().toString() - time < 86400000){
+				this.routerTo = '/aboutme';
+				this.routerContent = '我自己';
+
+				this.appointmentRouter = '/appointment'
+
+			}else{
+				this.routerTo = '/logandreg';
+				this.routerContent = '登陆／注册';
+
+				this.appointmentContent = "请先登录";
+				this.appointmentRouter = '/'
+			}
+		},
 
 	}
 </script>

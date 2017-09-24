@@ -38,7 +38,8 @@
 </template>
 
 <script>
-	import backarrow from '@/components/backArrow.vue'
+	import backarrow from '@/components/backArrow.vue';
+
 	export default{
 		data:function(){
 			return{
@@ -57,6 +58,7 @@
 		},
 		methods: {
 			sendpost: function(){
+				const that = this;
 				if(this.checker === true){
 
 					var querystring = require('querystring');
@@ -71,17 +73,30 @@
 					var postData = querystring.stringify(bodyString);
 	
 					httpRequest = new XMLHttpRequest();
+
 					if(!httpRequest){
 						alert('这里有一点错');
 						return false;
 					}
-	
+				
 					httpRequest.onreadystatechange = function(){
 						if(httpRequest.readyState === XMLHttpRequest.DONE){
 							if(httpRequest.status === 200){
-								alert(httpRequest.responseText);
+
+								if(httpRequest.responseText == NaN){
+									alert(httpRequest.responseText);
+
+								}else{
+
+									localStorage.verify = true;
+									localStorage.time = httpRequest.responseText;
+									alert('登陆成功');
+									that.$router.push('/');
+								}
+
 							}else{
 								alert('呀！网络错误！');
+								
 							}
 						}
 					}
@@ -89,12 +104,15 @@
 					httpRequest.open('POST','https://www.ryansky.cn:7788/');
 					httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
 					httpRequest.send(postData);
+						
+
 				}else{
-					alert('请检查输入内容')
+					alert('请检查输入内容');
 				}
 			},
 			forget:function(){
-				alert('啥？忘了密码了？真是拿你没办法。')
+				alert('啥？忘了密码了？真是拿你没办法。');
+				
 			}
 		},
 		watch:{
