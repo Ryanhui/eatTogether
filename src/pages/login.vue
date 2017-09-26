@@ -78,18 +78,17 @@
 						alert('这里有一点错');
 						return false;
 					}
-				
+					
 					httpRequest.onreadystatechange = function(){
 						if(httpRequest.readyState === XMLHttpRequest.DONE){
 							if(httpRequest.status === 200){
 
-								if(httpRequest.responseText == NaN){
+								if(isNaN(httpRequest.responseText)){
 									alert(httpRequest.responseText);
-
 								}else{
-
 									localStorage.verify = true;
 									localStorage.time = httpRequest.responseText;
+									localStorage.user = that.useremail;
 									alert('登陆成功');
 									that.$router.push('/');
 								}

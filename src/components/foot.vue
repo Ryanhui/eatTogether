@@ -1,10 +1,10 @@
 <template>
 	<div id="footer">
 		<div id="date">
-			<router-link :to="appointmentRouter" v-on:click="showAlert">约个饭</router-link>
+			<router-link v-on:click.native="showAlert" :to="appointmentRouter" >约个饭</router-link>
 		</div>
 		<div id="login">
-			<router-link :to="routerTo">{{ routerContent }}</router-link>
+			<router-link :to="routerTo" >{{ routerContent }}</router-link>
 		</div>	
 	</div>
 </template>
@@ -23,8 +23,9 @@
 	
 		methods:{
 			showAlert:function(){
+				
 				if(this.appointmentContent == ''){
-					return;
+				
 				}else{
 					alert(this.appointmentContent);
 				}
@@ -35,7 +36,7 @@
 			let verify = localStorage.getItem('verify');
 			let time = localStorage.getItem('time');
 
-			if(verify == 'true' && Date.now().toString() - time < 86400000){
+			if(verify == 'true' && Date.now().toString() - time < 36000000){
 				this.routerTo = '/aboutme';
 				this.routerContent = '我自己';
 

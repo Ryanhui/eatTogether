@@ -4,6 +4,7 @@ import logandreg from '@/pages/logandreg'
 import main from '@/pages/main'
 import registered from '@/pages/registered'
 import login from '@/pages/login'
+import appointment from '@/pages/appointment'
 
 Vue.use(Router)
 
@@ -28,6 +29,11 @@ export default new Router({
       path: '/login',
       name: 'login',
       component: login
+    },
+    {
+      path: '/appointment',
+      name: 'appointment',
+      component: appointment
     }
   ]
 })
