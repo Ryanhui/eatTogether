@@ -37,7 +37,7 @@
 			let time = localStorage.getItem('time');
 
 			if(verify == 'true' && Date.now().toString() - time < 36000000){
-				this.routerTo = '/aboutme';
+				this.routerTo = '/myself';
 				this.routerContent = '我自己';
 
 				this.appointmentRouter = '/appointment'

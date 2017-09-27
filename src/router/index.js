@@ -5,6 +5,7 @@ import main from '@/pages/main'
 import registered from '@/pages/registered'
 import login from '@/pages/login'
 import appointment from '@/pages/appointment'
+import myself from '@/pages/myself'
 
 Vue.use(Router)
 
@@ -34,6 +35,11 @@ export default new Router({
       path: '/appointment',
       name: 'appointment',
       component: appointment
+    },
+    {
+      path: '/myself',
+      name: myself,
+      component: myself
     }
   ]
 })
