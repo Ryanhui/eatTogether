@@ -55,6 +55,9 @@
 	export default{
 		data:function(){
 			return{
+				bookedId:   '',
+				bookedName: '',
+				booked: 	false,
 				position: 	'',   //哪个餐厅
 				day: 		'',
 				timeFrom: {       //开始时间
@@ -86,6 +89,9 @@
 				const that = this;
 
 				var bodyString = {
+					bookedName: this.bookedName,
+					bookedId: this.bookedId,
+					booked: this.booked,
                 	place : this.position,
                 	timeFrom : this.timeFrom.HH + ':' + this.timeFrom.mm,
                 	timeTo	 : this.timeTo.HH + ':' + this.timeTo.mm,

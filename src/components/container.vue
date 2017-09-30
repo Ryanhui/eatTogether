@@ -17,7 +17,7 @@
 					<div>{{time}}</div>					
 				</div>
 				<div class="body_right">
-					<button>一起吃</button>
+					<button v-on:click="eatTogether">一起吃</button>
 				</div>
 			</div>	
 
@@ -36,7 +36,44 @@
 				photoUrl: 'http://www.qinlab.net/heads/' + this.userHead  + '.jpg'
 			}
 		},
-		props:['userName','message','place','releaseYear','releaseTime','time','userHead']
+		props:['userName','message','place','releaseYear','releaseTime','time','userHead','booked','bookedId','bookedName','id'],
+		methods:{
+			eatTogether:function(){
+				if(this.booked === "false"){
+					var querystring = require('querystring');
+        			var httpRequest;
+        			var bodyString = {
+        			    _id: this.id,
+        			    bookedId: localStorage.user
+        			};
+        			var postStr = querystring.stringify(bodyString);
+		
+        			httpRequest = new XMLHttpRequest();
+        			if(!httpRequest) {
+        			    alert('这里有一点错误！');
+        			    return false;
+        			}
+        			const that = this;
+  					
+        			httpRequest.onreadystatechange = function(){
+        			    if(httpRequest.readyState === XMLHttpRequest.DONE){
+        			        if(httpRequest.status === 200) {
+        			            alert(httpRequest.responseText);
+        			            that.$router.go(0);       		            
+        			        }else{
+        			            alert('呀！网络错误！');
+        			        }
+        			    }
+        			};
+		
+        			httpRequest.open('POST','https://www.ryansky.cn:2180/');
+        			httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        			httpRequest.send(postStr);
+				}else{
+					alert('已经被预定了');
+				}
+			}
+		}
 	}
 </script>
 

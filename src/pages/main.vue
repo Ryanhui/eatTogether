@@ -2,7 +2,7 @@
 	<div>
 		<myheader></myheader>
     <div id="containerBox">
-      <container  v-for="item in artical" :key="item.userId" :userName="item.userName" :place="item.place" :releaseTime="item.releaseTime" :releaseYear="item.releaseYear" :time="item.time" :message="item.message" :userHead="item.userHead"></container>
+      <container  v-for="item in artical" :key="item.userId" :userName="item.userName" :place="item.place" :releaseTime="item.releaseTime" :releaseYear="item.releaseYear" :time="item.time" :message="item.message" :userHead="item.userHead" :booked="item.booked" :bookedId="item.bookedId" :bookedName="item.bookedName" :id="item._id"></container>
       <p class="iAmBottom">没有啦! ┌( ಠ_ಠ)┘ </p>
     </div>
     <myfooter></myfooter>  

@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<div class="booked">
-			<p>暂时无人预定</p>
+			<p>{{ booked == "true" ? "哇哦！[ " + bookedName + " ] 跟你一起吃饭饭耶" : "还没人和你一起吃饭饭"}}</p>
 		</div>
 
 		<div class="head">
@@ -9,23 +9,23 @@
 				<p>我自己</p>
 			</div>
 			<div class="date">
-				<p>9月19日</p>
-				<p>2017</p>
+				<p>{{ releaseTime }}</p>
+				<p>{{ releaseYear }}</p>
 			</div>
 		</div>
 
 		<div class="timePosition">
 			<div class="body_left">
-				<div>第二餐厅</div>
-				<div>3:00 - 4:00</div>					
+				<div>{{ place }}</div>
+				<div>{{ time }}</div>					
 			</div>
 			<div class="body_right">
-				<button>删除</button>
+				<button v-on:click="remove">删除</button>
 			</div>
 		</div>
 
 		<div class="tail">
-			<p>「 大是大非老地方给那两个地方艰难的胜利 」 </p>
+			<p>「 {{message}} 」</p>
 		</div>
 
 	</div>
@@ -36,6 +36,41 @@
 		data:function(){
 			return{
 
+			}
+		},
+
+		props:['userId','booked','releaseTime','releaseYear','place','time','message','id',"index","bookedId","bookedName"],
+
+		methods:{
+			remove:function(){
+				var querystring = require('querystring');
+        		var httpRequest;
+        		var bodyString = {
+        		    _id: this.id
+        		};
+        		var postStr = querystring.stringify(bodyString);
+	
+        		httpRequest = new XMLHttpRequest();
+        		if(!httpRequest) {
+        		    alert('这里有一点错误！');
+        		    return false;
+        		}
+        		const that = this;
+  				
+        		httpRequest.onreadystatechange = function(){
+        		    if(httpRequest.readyState === XMLHttpRequest.DONE){
+        		        if(httpRequest.status === 200) {
+        		            alert(httpRequest.responseText);
+        		            that.$router.go(0);       		            
+        		        }else{
+        		            alert('呀！网络错误！');
+        		        }
+        		    }
+        		};
+	
+        		httpRequest.open('POST','https://www.ryansky.cn:1010/');
+        		httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        		httpRequest.send(postStr);
 			}
 		}
 	}

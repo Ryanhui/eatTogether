@@ -18,10 +18,9 @@
 		</div>
 
 		<div class="myRelease">
-			<p>- 我的饭局 -</p>
-			<myrelease></myrelease>
-			<myrelease></myrelease>
-			
+			<p v-on:click="fuck">- 我的发布 -</p>
+			<myrelease v-for="(one ,index) of postData" :index="index" :userId="one.userId" :message="one.message" :place="one.place" :releaseTime="one.releaseTime" :releaseYear="one.releaseYear" :time="one.time" :id="one._id" :key="one.releaseTime" :booked="one.booked" :bookedId="one.bookedId" :bookedName="one.bookedName"></myrelease>
+			<p>这里木有啦</p>
 		</div>
 	</div>
 </template>
@@ -38,7 +37,29 @@
 		data:function(){
 			return{
 				name: 		'惠氏集团挖坑手',
-				useremail: 	'1175782349@qq.com'
+				useremail: 	'1175782349@qq.com',
+				postData:   ''    
+			}
+		},
+		computed:{
+			test(){
+				return this.$store.state.mydata;
+			}
+		},
+		methods:{
+			fuck:function(){
+				this.postData = this.$store.state.mydata;
+			}
+		},
+		created:function(){
+			this.$store.dispatch('getData').then(()=>{
+				this.postData = this.$store.state.mydata;
+			})
+			
+		},
+		watch:{
+			test(val){
+				this.postData = val;
 			}
 		}
 	}	

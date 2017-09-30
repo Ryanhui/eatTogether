@@ -8,16 +8,45 @@ const debug = process.env.NODE_ENV !== 'production'
 
 export default new Vuex.Store({
 	state: {
-		count: 3
+		mydata: ''
 	},
-
 	mutations: {
-		increment(state){
-			state.count++
+		changeMydata(state,n){
+			state.mydata = n;
 		}
 	},
-
 	actions: {
-		
+		getData({commit}){
+			
+			var querystring = require('querystring');
+        	var httpRequest;
+        	var bodyString = {
+        	    useremail: localStorage.user
+        	};
+        	var postStr = querystring.stringify(bodyString);
+
+        	httpRequest = new XMLHttpRequest();
+        	if(!httpRequest) {
+        	    alert('这里有一点错误！');
+        	    return false;
+        	}
+        	const that = this;
+  			
+        	httpRequest.onreadystatechange = function(){
+        	    if(httpRequest.readyState === XMLHttpRequest.DONE){
+        	        if(httpRequest.status === 200) {
+        	            //that.postData = JSON.parse(httpRequest.responseText);
+        	            commit('changeMydata',JSON.parse(httpRequest.responseText));
+        	        }else{
+        	            alert('呀！网络错误！');
+        	        }
+        	    }
+        	};
+
+        	httpRequest.open('POST','https://www.ryansky.cn:9090/');
+        	httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        	httpRequest.send(postStr);
+		}
 	}
+
 })
