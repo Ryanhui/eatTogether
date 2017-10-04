@@ -1,33 +1,27 @@
 <template>
-	<div class="container">
-		<div class="booked">
-			<p>{{ booked == "true" ? "哇哦！[ " + bookedName + " ] 跟你一起吃饭饭耶" : "还没人和你一起吃饭饭"}}</p>
-		</div>
-
+	<div class="mybooked">
 		<div class="head">
-			<div class="me">
-				<p>我自己</p>
-			</div>
-			<div class="date">
-				<p>时间 {{ releaseTime }}</p>
+			<div class="headimg"><img :src="itemUserHead" alt=""></div>
+			<div class="name">{{userName}}</div>
+			<div class="releasetime"> 
+				<p>时间 {{releaseTime}}</p>
 				<p>{{ releaseYear }}</p>
 			</div>
 		</div>
 
 		<div class="timePosition">
 			<div class="body_left">
-				<div>{{ place }}</div>
-				<div>{{ time }}</div>					
+				<div>{{place}}</div>
+				<div>{{time}}</div>					
 			</div>
 			<div class="body_right">
-				<button v-on:click="remove">删除</button>
+				<button v-on:click="cancel">取消</button>
 			</div>
 		</div>
 
 		<div class="tail">
 			<p>「 {{message}} 」</p>
 		</div>
-
 	</div>
 </template>
 
@@ -35,15 +29,14 @@
 	module.exports = {
 		data:function(){
 			return{
-
+				itemUserHead: 'https://www.ryansky.cn:3333/head/' + this.userId.replace(/[@\.]/g,'_') + '.jpg'
 			}
 		},
-
-		props:['userId','booked','releaseTime','releaseYear','place','time','message','id',"index","bookedId","bookedName"],
+		props:['userId','booked','releaseTime','releaseYear','place','time','message','id',"index","bookedId","bookedName",'userName','userHead'],
 
 		methods:{
-			remove:function(){
-				if(confirm('确认删除吗？')){
+			cancel:function(){
+				if(confirm("确认取消吗？")){
 					var querystring = require('querystring');
         			var httpRequest;
         			var bodyString = {
@@ -69,25 +62,25 @@
         			    }
         			};
 	
-        			httpRequest.open('POST','https://www.ryansky.cn:3333/delete');
+        			httpRequest.open('POST','https://www.ryansky.cn:3333/cancel');
         			httpRequest.send(postStr);
-				}else{
-					return;
+
 				}
+			
 			}
 		}
 	}
 </script>
 
 <style scoped>
-	.container{
-		min-height: 10em;
+	.mybooked{
+		min-height: 8em;
 		max-height: 20em;
 		background-color: white;
 		box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
 		margin-bottom: 1em;
 	}
-	.head{
+		.head{
 		padding: 1em 1.5em;
 		overflow: hidden;
 	}
@@ -125,12 +118,37 @@
 		color: rgba(0,0,0,0.54);
 	}
 	.tail{
-		padding: 1em;
+		padding: 1em 1.5em;
 		border-top:1px solid #ebebeb;
+		color: rgba(0,0,0,.54);
 	}
-	.booked{
-		padding: 0.6em 1.5em;
-		border-bottom: 1px solid #ebebeb;
-		color: rgba(0,0,0,0.54);
+	.head{
+		overflow: hidden;
+		padding: 1em;
+	}
+	.head div{ 
+		float: left;
+	}
+	.head img{
+		width: 4em;
+		height: 4em;
+		border-radius:50%;
+	}
+	.headimg{
+		width: 4em;
+		height: 4em;
+		border-radius: 50%;
+		background: #eee;
+	}
+	.name{
+		padding-left: 1em;
+		padding-top: .5em;
+	}
+	.releasetime{
+		float: right!important;
+		color: rgba(0,0,0,0.87);
+	}
+	.releasetime p{
+		text-align: right;
 	}
 </style>

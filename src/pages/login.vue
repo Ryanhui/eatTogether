@@ -20,8 +20,8 @@
 				<div class="captchaInput">
 					<input v-model="captcha" type="text" placeholder="请输入验证码">
 				</div>
-				<div class="captchaImg">
-					<img src="http://123.207.87.143:8124/" alt="刷新显大图">
+				<div class="captchaImg" v-on:click="ccprefresh">
+					<img :src="ccpsrc" alt="点击获取验证码">
 				</div>
 			</div>	
 
@@ -50,13 +50,26 @@
 				checkUserEmail: '',
 				checkcaptcha: 	'',
 
-				checker: 		false
+				checker: 		false,
+				ccpsrc: 		''
 			}
 		},
 		components: {
 			backarrow
 		},
 		methods: {
+			ccprefresh:function(){
+				var xmlhttp = new XMLHttpRequest();
+				var url = "https://www.ryansky.cn:3333/ccp";
+				var self = this;
+				xmlhttp.onreadystatechange = function() {
+    				if (this.readyState == 4 && this.status == 200) {
+        				self.ccpsrc = "data:image/jpeg;base64," + this.response;
+    				}
+				};
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+			},
 			sendpost: function(){
 				const that = this;
 				if(this.checker === true){
@@ -100,8 +113,7 @@
 						}
 					}
 	
-					httpRequest.open('POST','https://www.ryansky.cn:7788/');
-					httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+					httpRequest.open('POST','https://www.ryansky.cn:3333/login');
 					httpRequest.send(postData);
 						
 
@@ -186,10 +198,10 @@
 		height: 100%;
 	}
 	.button{
-		background-color: #4285f4;
+		background-color: #c0dfd9;
 		box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 		border-radius: 3px;
-		border: 1px solid #4285f4;
+		border: 1px solid #c0dfd9;
 		color: white;
 		font-size: 1.5em;
 		line-height: 1em;

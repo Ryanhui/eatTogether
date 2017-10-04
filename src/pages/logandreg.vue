@@ -3,8 +3,8 @@
 		<div class="returnBack">
 			<backarrow message='/'></backarrow>
 		</div>
-		<div class="logoImg">
-			<img src="../assets/eat.png" alt="一起吃">
+		<div class="logowords">
+			<p>「 遇到或者遇不到，都不过是命中注定 」</p>
 		</div>
 		<div class="logorreg">
 			<div class="log">
@@ -17,6 +17,9 @@
 					<div>注册</div>
 				</router-link>
 			</div>
+		</div>
+		<div class="contactMe">
+			<p>如果有任何疑问，请联系QQ:1175782349</p>
 		</div>
 	</div>
 </template>
@@ -79,7 +82,7 @@
 	.reg div,
 	.log div{
 		margin: 1em;
-		background: #4285f4;
+		background: #c0dfd9;
 		text-align: center;	
 		font-size: 1.5em;
 		color: white;
@@ -96,13 +99,19 @@
 		left: 0;
 		width: 100%;
 	}
-	.logoImg{
-		width: 20em;
-		margin: 0 auto;
-		margin-top: 6em;
-		margin-bottom: 1em;
+	.logowords{
+		padding: 12em 0;
 	}
-	.logoImg img{
-		width: 100%;
+	.logowords p{
+		text-align: center;
+		color: rgba(0,0,0,.54);
+		font-size: 1.4em;
+	}
+	.contactMe{
+		margin-top: 7em;
+	}
+	.contactMe p{
+		text-align: center;
+		color: rgba(0,0,0,0.35);
 	}
 </style>

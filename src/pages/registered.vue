@@ -22,10 +22,10 @@
 			<span>{{ checkrepeat }}</span>
 			<div class="captchaContainer">
 				<div class="captchaInput">
-					<input v-model="captcha" type="text" placeholder="请输入验证码">
+					<input v-model="captcha" type="text"  placeholder="请输入验证码">
 				</div>
 				<div class="captchaImg">
-					<img src="http://123.207.87.143:8124/" alt="刷新显大图">
+					<img :src="ccpsrc" alt="点击显示验证码" v-on:click="ccprefresh">
 				</div>
 			</div>
 			<span>{{ checkcaptcha }}</span>
@@ -55,10 +55,24 @@
 				checkrepeat: 	'',
 
 				captcha: 		'',
-				checkcaptcha: 	''
+				checkcaptcha: 	'',
+
+				ccpsrc: 		'data:image/jpeg;base64,'
 			}
 		},
 		methods: {
+			ccprefresh:function(){
+				var xmlhttp = new XMLHttpRequest();
+				var url = "https://www.ryansky.cn:3333/ccp";
+				var self = this;
+				xmlhttp.onreadystatechange = function() {
+    				if (this.readyState == 4 && this.status == 200) {
+        				self.ccpsrc = "data:image/jpeg;base64," + this.response;
+    				}
+				};
+				xmlhttp.open("GET", url, true);
+				xmlhttp.send();
+			},
 			check:function(){
 				//验证email是否合法
 				let flag = true;
@@ -113,7 +127,7 @@
 					name: 		this.name,
 					email: 		this.email,
 					password: 	this.password,
-					captcha: 	this.captcha
+					captcha: 	this.captcha.toLowerCase()
 				};
 
 				var postStr = querystring.stringify(bodyString);
@@ -123,18 +137,22 @@
 					alert('这里有一点错误！');
 					return false;
 				}
+				var self = this;
 				httpRequest.onreadystatechange = function(){
 					if(httpRequest.readyState === XMLHttpRequest.DONE){
 						if(httpRequest.status === 200) {
 							alert(httpRequest.responseText);
+							if(httpRequest.responseText === "注册成功,请登录"){
+								self.$router.push('/logandreg');
+							}
+							
 						}else{
 							alert('呀！网络错误！');
 						}
 					}
 				};
 		
-				httpRequest.open('POST','https://www.ryansky.cn:2323/');
-				httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded;charset=UTF-8");
+				httpRequest.open('POST','https://www.ryansky.cn:3333/register');
 				httpRequest.send(postStr);
 			}
 		}
@@ -169,12 +187,12 @@
 		padding: 0.6em;
 		color: white;
 		font-size: 1.5em;
-		background-color: #4285f4;
+		background-color: #c0dfd9;
 		border-radius: 5px;
 		margin-top: 10px;
 		box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
 		border-radius: 3px;
-		border: 1px solid #4285f4;
+		border: 1px solid #c0dfd9;
 	}
 	span{
 		color: red;

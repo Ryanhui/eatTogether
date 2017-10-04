@@ -3,7 +3,7 @@
 		<div class="gap"></div>
 		<div class="who">
 			<div class="head">
-				<div><img :src="photoUrl" alt=""></div>
+				<div class="headimg"><img :src="photoUrl" alt=""></div>
 				<div class="name">{{ userName }}</div>
 				<div class="releasetime"> 
 					<p>时间 {{releaseTime}}</p>
@@ -17,7 +17,7 @@
 					<div>{{time}}</div>					
 				</div>
 				<div class="body_right">
-					<button v-on:click="eatTogether">一起吃</button>
+					<button v-on:click="eatTogether">{{btn}}</button>
 				</div>
 			</div>	
 
@@ -33,45 +33,66 @@
 	export default{
 		data: function(){
 			return{
-				photoUrl: 'http://www.qinlab.net/heads/' + this.userHead  + '.jpg'
+				photoUrl: 'https://www.ryansky.cn:3333/head/' + this.userHead  + '.jpg',
+				btn: '一起吃'
+			}
+		},
+		created:function(){
+			if(this.booked === 'true'){
+				this.btn = '已经被预定了';
+			}else{
+				this.btn = '一起吃';
 			}
 		},
 		props:['userName','message','place','releaseYear','releaseTime','time','userHead','booked','bookedId','bookedName','id'],
 		methods:{
 			eatTogether:function(){
-				if(this.booked === "false"){
-					var querystring = require('querystring');
-        			var httpRequest;
-        			var bodyString = {
-        			    _id: this.id,
-        			    bookedId: localStorage.user
-        			};
-        			var postStr = querystring.stringify(bodyString);
-		
-        			httpRequest = new XMLHttpRequest();
-        			if(!httpRequest) {
-        			    alert('这里有一点错误！');
-        			    return false;
-        			}
-        			const that = this;
-  					
-        			httpRequest.onreadystatechange = function(){
-        			    if(httpRequest.readyState === XMLHttpRequest.DONE){
-        			        if(httpRequest.status === 200) {
-        			            alert(httpRequest.responseText);
-        			            that.$router.go(0);       		            
-        			        }else{
-        			            alert('呀！网络错误！');
-        			        }
-        			    }
-        			};
-		
-        			httpRequest.open('POST','https://www.ryansky.cn:2180/');
-        			httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-        			httpRequest.send(postStr);
-				}else{
-					alert('已经被预定了');
+				function checkId(){
+					if(localStorage.verify === 'true' && Date.now().toString() - localStorage.time < 36000000){
+						return true;
+					}else{
+						return false;
+					}
 				}
+				if(checkId()){
+						if(confirm('想好了？')){
+						if(this.booked === "false"){
+						var querystring = require('querystring');
+        				var httpRequest;
+        				var bodyString = {
+        				    _id: this.id,
+        				    bookedId: localStorage.user
+        				};
+        				var postStr = querystring.stringify(bodyString);
+		
+        				httpRequest = new XMLHttpRequest();
+        				if(!httpRequest) {
+        				    alert('这里有一点错误！');
+        				    return false;
+        				}
+        				const that = this;
+  					
+        				httpRequest.onreadystatechange = function(){
+        				    if(httpRequest.readyState === XMLHttpRequest.DONE){
+        				        if(httpRequest.status === 200) {
+        				            alert(httpRequest.responseText);
+        				            that.$router.go(0);       		            
+        				        }else{
+        				            alert('呀！网络错误！');
+        				        }
+        				    }
+        				};
+		
+        				httpRequest.open('POST','https://www.ryansky.cn:3333/book');
+        				httpRequest.send(postStr);
+					}else{
+						alert('已经被预定了');
+					}
+				}
+				}else{
+					alert('请先登录')
+				}
+
 			}
 		}
 	}
@@ -101,6 +122,12 @@
 		width: 4em;
 		height: 4em;
 		border-radius:50%;
+	}
+	.headimg{
+		width: 4em;
+		height: 4em;
+		border-radius: 50%;
+		background: #eee;
 	}
 	.name{
 		padding-left: 1em;
@@ -137,8 +164,8 @@
 		padding: 0.5em;
 		border: 1px solid #fff;
 		border-radius: 3px;
-		background: #eeeeee;
-		color: rgba(0,0,0,0.54);
+		background: #c0dfd9;
+		color: #3b3a36;
 	}
 	.tail{
 		padding: 1em;

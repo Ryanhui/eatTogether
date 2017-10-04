@@ -39,7 +39,7 @@
   					return false;
   				}
   				httpRequest.onreadystatechange = alertContents;
-  				httpRequest.open('GET', 'http://123.207.87.143:3345/');
+  				httpRequest.open('GET', 'https://www.ryansky.cn:3333/');
   				httpRequest.send();
   			}
   			function alertContents(){

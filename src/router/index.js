@@ -6,6 +6,7 @@ import registered from '@/pages/registered'
 import login from '@/pages/login'
 import appointment from '@/pages/appointment'
 import myself from '@/pages/myself'
+import updataHead from '@/pages/updataHead'
 
 Vue.use(Router)
 
@@ -40,6 +41,11 @@ export default new Router({
       path: '/myself',
       name: myself,
       component: myself
+    },
+    {
+      path: '/updataHead',
+      name: updataHead,
+      component: updataHead
     }
   ]
 })

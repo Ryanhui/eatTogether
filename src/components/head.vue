@@ -1,6 +1,6 @@
 <template>
 	<div id="header">
-		<p>福建农林大学</p>
+		<p>一起吃<em>「 福建农林大学 」</em></p>
 	</div>
 </template>
 
@@ -29,6 +29,9 @@
 	#header p{
 		font-size: 1.5em;
 		color: rgba(0,0,0,0.7);
-		
+		padding-left: 1em;
+	}
+	#header em{
+		font-size: 0.5em;
 	}
 </style>

@@ -7,24 +7,25 @@
 			<div class="position">
 				<p>那么，你想在哪里吃饭呢</p>
 				  <select v-model="position">
-    				<option disabled value="">选一个吧</option>
+    				<option disabled value=""></option>
     				<option>第一餐厅</option>
     				<option>第二餐厅</option>
     				<option>第三餐厅</option>
     				<option>第八餐厅</option>
     				<option>第九餐厅</option>
-    				<option>第十餐厅</option>
     				<option>第十一餐厅</option>
     				<option>第十二餐厅</option>
+    				<option>第十三餐厅</option>
     				<option>京元餐厅</option>
     				<option>教职工餐厅</option>
+    				<option>青年餐厅</option>
   				  </select>
 			</div>
 
 			<div class="time">
 				<p>你想什么时候呀</p>
 				<select v-model="day">
-					<option disabled value="">今天或者明天哦</option>
+					<option disabled value=""></option>
 					<option>今天</option>
 					<option>明天</option>
 				</select>
@@ -35,8 +36,8 @@
 			</div>
 
 			<div class="message">
-				<p>现在，留下你想说的吧</p>
-				<textarea v-model="message" v-on:keyup="auto_grow" ref="myTextArea" placeholder="写在这里..."></textarea>
+				<p>现在，留下你想说的话</p>
+				<textarea v-model="message" v-on:keyup="auto_grow" ref="myTextArea" placeholder="写在这里，让大家了解一下你吧..."></textarea>
 			</div>
 			
 			<div class="release">
@@ -125,8 +126,7 @@
                 		}
             		};
 	
-            		httpRequest.open('POST','https://www.ryansky.cn:2310/');
-            		httpRequest.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+            		httpRequest.open('POST','https://www.ryansky.cn:3333/appointment');
             		httpRequest.send(postStr);
             	}
 
@@ -202,7 +202,7 @@
 		padding: 0.5em 0;
 		border-radius: 2px;
 		border: 0;
-		background-color: white;
+		background-color: #c0dfd9;
 	}
 	textarea{
 		resize: none;
