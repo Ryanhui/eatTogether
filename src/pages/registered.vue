@@ -25,12 +25,12 @@
 					<input v-model="captcha" type="text"  placeholder="请输入验证码">
 				</div>
 				<div class="captchaImg">
-					<img :src="ccpsrc" alt="点击显示验证码" v-on:click="ccprefresh">
+					<img :src="ccpsrc" alt="点一下刷新验证码" v-on:click="ccprefresh">
 				</div>
 			</div>
 			<span>{{ checkcaptcha }}</span>
-			<div>
-				<input v-on:click="check" class="button confirm" type="submit" value="注册">
+			<div class="register">
+				<input v-on:click="check" class="button confirm"  :value="reging">
 			</div>
 		</div>
 	</div>
@@ -57,7 +57,8 @@
 				captcha: 		'',
 				checkcaptcha: 	'',
 
-				ccpsrc: 		'data:image/jpeg;base64,'
+				ccpsrc: 		'',
+				reging:         '注册'
 			}
 		},
 		methods: {
@@ -138,21 +139,25 @@
 					return false;
 				}
 				var self = this;
+				this.reging = "正在注册..."
 				httpRequest.onreadystatechange = function(){
 					if(httpRequest.readyState === XMLHttpRequest.DONE){
 						if(httpRequest.status === 200) {
 							alert(httpRequest.responseText);
+							self.reging = "注册";
 							if(httpRequest.responseText === "注册成功,请登录"){
 								self.$router.push('/logandreg');
 							}
 							
 						}else{
-							alert('呀！网络错误！');
+							alert('呀！网络错误！再试');
+							self.reging = "注册";
 						}
 					}
 				};
 		
 				httpRequest.open('POST','https://www.ryansky.cn:3333/register');
+				requestObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 				httpRequest.send(postStr);
 			}
 		}
@@ -184,15 +189,11 @@
 		font-size: 1.2em;
 	}
 	.button{
-		padding: 0.6em;
-		color: white;
-		font-size: 1.5em;
+		border:none;
+		text-align: center;
 		background-color: #c0dfd9;
-		border-radius: 5px;
-		margin-top: 10px;
-		box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-		border-radius: 3px;
-		border: 1px solid #c0dfd9;
+		font-size: 1.5em;
+		color: white;
 	}
 	span{
 		color: red;
@@ -213,12 +214,23 @@
 		-webkit-box-flex: 1;
 		-moz-box-flex: 1;
 		box-flex: 1;
+		
+	}
+	.captchaInput{
+		width: 14em;
 	}
 	.captchaImg{
-		padding-left: 10px;
+		margin-left: 10px;
+		width: 12em;
+		height: 4em;
 	}
 	.captchaImg img{
-		width: 100%;
-		height: 100%;
+		display: block;
+		height: 3.7em;
+		width: 12em;
+	}
+	.register{
+		box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+		border-radius: 5px;
 	}
 </style>

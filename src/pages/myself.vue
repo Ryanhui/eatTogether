@@ -163,7 +163,7 @@
 	}
 	.updataHead{
 		position: absolute;
-		left: 23em;
+		right: 2em;
 		top: 10.3em;
 	}
 	.updataHead a{

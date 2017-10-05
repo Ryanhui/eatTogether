@@ -27,8 +27,8 @@
 
 			<div class="insert">{{ checkcaptcha }}</div>
 
-			<div>
-				<input v-on:click="sendpost" class="button confirm" type="submit" value="登陆">
+			<div class="loginbtn">
+				<input v-on:click="sendpost" class="button confirm" :value="loginIng">
 			</div>		
 		</div>
 		<div class="forget">
@@ -51,7 +51,9 @@
 				checkcaptcha: 	'',
 
 				checker: 		false,
-				ccpsrc: 		''
+				ccpsrc: 		'',
+
+				loginIng: 		'登陆'
 			}
 		},
 		components: {
@@ -73,14 +75,14 @@
 			sendpost: function(){
 				const that = this;
 				if(this.checker === true){
-
+					this.loginIng = '正在登录';
 					var querystring = require('querystring');
 					var httpRequest
 	
 					var bodyString = {
 						useremail: this.useremail,
 						password: this.password,
-						captcha: this.captcha
+						captcha: this.captcha.toLowerCase().replace(/\s+/g,"")
 					}
 	
 					var postData = querystring.stringify(bodyString);
@@ -91,13 +93,14 @@
 						alert('这里有一点错');
 						return false;
 					}
-					
+					var self = this;
 					httpRequest.onreadystatechange = function(){
 						if(httpRequest.readyState === XMLHttpRequest.DONE){
 							if(httpRequest.status === 200){
 
 								if(isNaN(httpRequest.responseText)){
 									alert(httpRequest.responseText);
+									self.loginIng = "登陆";
 								}else{
 									localStorage.verify = true;
 									localStorage.time = httpRequest.responseText;
@@ -108,6 +111,7 @@
 
 							}else{
 								alert('呀！网络错误！');
+								self.loginIng = "登陆";
 								
 							}
 						}
@@ -191,20 +195,18 @@
 		box-flex: 1;
 	}
 	.captchaImg{
-		padding-left: 10px;
+		margin-left: 10px;
 	}
 	.captchaImg img{
-		width: 100%;
-		height: 100%;
+		width: 12em;
+		height: 3.7em;
 	}
 	.button{
 		background-color: #c0dfd9;
-		box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
-		border-radius: 3px;
-		border: 1px solid #c0dfd9;
 		color: white;
+		border:none;
+		text-align: center;
 		font-size: 1.5em;
-		line-height: 1em;
 	}
 	.forget{
 		padding: 1em;
@@ -218,5 +220,9 @@
 		padding-bottom: 1em;
 		color: red;
 		padding-left: 3px;
+	}
+	.loginbtn{
+		box-shadow:0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.12), 0 1px 5px 0 rgba(0,0,0,0.2);
+		border-radius: 5px;
 	}
 </style>

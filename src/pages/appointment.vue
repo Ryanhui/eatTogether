@@ -37,7 +37,7 @@
 
 			<div class="message">
 				<p>现在，留下你想说的话</p>
-				<textarea v-model="message" v-on:keyup="auto_grow" ref="myTextArea" placeholder="写在这里，让大家了解一下你吧..."></textarea>
+				<textarea v-model="message" v-on:keyup="auto_grow" ref="myTextArea" placeholder="请一定要告诉我如何才能找到你..."></textarea>
 			</div>
 			
 			<div class="release">
@@ -203,6 +203,7 @@
 		border-radius: 2px;
 		border: 0;
 		background-color: #c0dfd9;
+
 	}
 	textarea{
 		resize: none;

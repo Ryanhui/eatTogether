@@ -3,7 +3,7 @@
 		<myheader></myheader>
     <div id="containerBox">
       <container  v-for="item in artical" :key="item.userId" :userName="item.userName" :place="item.place" :releaseTime="item.releaseTime" :releaseYear="item.releaseYear" :time="item.time" :message="item.message" :userHead="item.userHead" :booked="item.booked" :bookedId="item.bookedId" :bookedName="item.bookedName" :id="item._id"></container>
-      <p class="iAmBottom">没有啦! ┌( ಠ_ಠ)┘ </p>
+      <p class="iAmBottom">{{ mes }}</p>
     </div>
     <myfooter></myfooter>  
 	</div>
@@ -18,7 +18,8 @@
 
     data:function(){
       return{
-          artical: ''
+          artical: '',
+          mes:     '加载中...'
       }
     },
 
@@ -30,25 +31,30 @@
 
   	methods:{
   		getArtical:function(){
+        this.mes = "加载中..."
         var that = this;
   			var httpRequest;
   			function makeRequest(){
   				httpRequest = new XMLHttpRequest();
   				if(!httpRequest){
   					alert('放弃吧，不能联网的。');
+            self.mes="没有啦! ┌( ಠ_ಠ)┘ ";
   					return false;
   				}
   				httpRequest.onreadystatechange = alertContents;
   				httpRequest.open('GET', 'https://www.ryansky.cn:3333/');
   				httpRequest.send();
   			}
+        var self = this;
   			function alertContents(){
-  				if(httpRequest.readyState === XMLHttpRequest.DONE) {
-  					if(httpRequest.status === 200) {
+  				if(httpRequest.readyState == XMLHttpRequest.DONE) {
+  					if(httpRequest.status == 200) {
   						that.artical = JSON.parse(httpRequest.responseText);
               console.log(JSON.parse(httpRequest.responseText));
+              self.mes="没有啦! ┌( ಠ_ಠ)┘ ";
   					}else{
   						alert('服务器响应有问题！');
+              self.mes="没有啦! ┌( ಠ_ಠ)┘ ";
   					}
   				}
   			}
