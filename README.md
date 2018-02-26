@@ -25,6 +25,5 @@
 
 ![Alt text](static/1.png) ![Alt text](static/3.png) ![Alt text](static/4.png) ![Alt text](static/5.png)
 
-注册，登陆，修改头像，发布，删除发布，预定，取消预定，好像大致就是这些。
+注册，登陆，修改头像，发布，删除发布，预定，取消预定。。
 
-还是萌新，bug满天飞，见谅。
